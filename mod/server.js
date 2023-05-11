@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import bodyParser from "body-parser"
-import { BingChat } from 'bing-chat'
+import send from "./send.js";
 
 // 释放网页
 const server = (data)=>{
@@ -18,7 +18,6 @@ const server = (data)=>{
     app.post('/bing' , (req , res)=>{
         // 获取数据对象
         const { model, text } = req.body;
-        const api = new BingChat({cookie: cookie})
         let mod = ""
         switch (parseInt(model)) {
             case 0: mod = 'Creative'; break
@@ -26,10 +25,10 @@ const server = (data)=>{
             case 2: mod = "Precise"; break
         }
 
-        const data = api.sendMessage(text, {variant: mod})
+        const data0 = send(cookie,text,mod)
 
-        if (data){
-            res.send(data)
+        if (data0){
+            res.send(data0)
         }else {
             res.status(500).send('<h1>访问失败</h1>');
         }
