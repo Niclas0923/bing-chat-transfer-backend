@@ -31,9 +31,11 @@ const server = (data)=>{
 
         let data0 = ""
         if (data === "null"){
+            console.log(`mod${mod}`)
             data0 =  await api.sendMessage(val,{variant: mod})
         }else {
-            data0 =  await api.sendMessage(val,data)
+            console.log(`type data ${typeof data}`)
+            data0 =  await api.sendMessage(val,JSON.parse(String(data)))
         }
 
         await console.log(data0.text)
