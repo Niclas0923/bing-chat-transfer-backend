@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors"
+import bodyParser from "body-parser"
 import { BingChat } from 'bing-chat'
 
 // 释放网页
@@ -9,6 +10,9 @@ const server = (data)=>{
     const app = express()
     // 允许跨域
     app.use(cors());
+    // 设置body的接收方式
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.json());
 
     // 接收post命令
     app.post('/bing' , (req , res)=>{
