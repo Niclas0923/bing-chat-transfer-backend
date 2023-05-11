@@ -24,21 +24,20 @@ const server = (data)=>{
             2: 'Precise'
         }[parseInt(model)];
 
-        await console.log(val)
+        await console.log(`mod ${mod}\n${val}`)
 
         // 测试是否发送了api
         const api = await new BingChat({cookie: cookie})
 
         let data0 = ""
         if (data === "null"){
-            console.log(`mod${mod}`)
             data0 =  await api.sendMessage(val,{variant: mod})
         }else {
-            console.log(`type data ${typeof data}`)
             data0 =  await api.sendMessage(val,JSON.parse(String(data)))
         }
 
         await console.log(data0.text)
+        await console.log("\n\n")
 
         if (data0){
             await res.send(data0)
