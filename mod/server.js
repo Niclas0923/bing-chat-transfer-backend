@@ -41,7 +41,7 @@ const server = (data)=>{
         await console.log(data0.text)
 
         if (data0){
-            await res.send({back:data0})
+            await res.send(data0)
         }else {
             await res.status(500).send('<h1>访问失败</h1>');
         }
