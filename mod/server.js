@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import bodyParser from "body-parser"
-import send from "./send.js";
+import {BingChat} from 'bing-chat'
 
 // 释放网页
 const server = (data)=>{
@@ -17,21 +17,24 @@ const server = (data)=>{
     // 接收post命令
     app.post('/bing' , async (req , res)=>{
         // 获取数据对象
-        const { model, text } = await req.body;
+        const { model, val , api0} = await req.body;
         const mod = await {
             0: 'Creative',
             1: 'Balanced',
             2: 'Precise'
         }[parseInt(model)];
 
-        console.log(text)
+        await console.log(val)
 
-        const data0 = await send(cookie,text,mod)
+        // 测试是否发送了api
+        let api = await api0==="null"?new BingChat({cookie: cookie}):api0
+
+        const data0 =  await api.sendMessage(val,{variant: mod})
 
         await console.log(data0.text)
 
         if (data0){
-            await res.send(data0)
+            await res.send({back:data0,api:api})
         }else {
             await res.status(500).send('<h1>访问失败</h1>');
         }
