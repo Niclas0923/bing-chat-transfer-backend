@@ -24,7 +24,11 @@ const server = (data)=>{
             2: 'Precise'
         }[parseInt(model)];
 
+        console.log(text)
+
         const data0 = await send(cookie,text,mod)
+
+        await console.log(data0.text)
 
         if (data0){
             await res.send(data0)
