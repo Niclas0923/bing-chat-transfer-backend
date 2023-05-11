@@ -15,22 +15,21 @@ const server = (data)=>{
     app.use(bodyParser.json());
 
     // 接收post命令
-    app.post('/bing' , (req , res)=>{
+    app.post('/bing' , async (req , res)=>{
         // 获取数据对象
-        const { model, text } = req.body;
-        let mod = ""
-        switch (parseInt(model)) {
-            case 0: mod = 'Creative'; break
-            case 1: mod = "Balanced"; break
-            case 2: mod = "Precise"; break
-        }
+        const { model, text } = await req.body;
+        const mod = await {
+            0: 'Creative',
+            1: 'Balanced',
+            2: 'Precise'
+        }[parseInt(model)];
 
-        const data0 = send(cookie,text,mod)
+        const data0 = await send(cookie,text,mod)
 
         if (data0){
-            res.send(data0)
+            await res.send(data0)
         }else {
-            res.status(500).send('<h1>访问失败</h1>');
+            await res.status(500).send('<h1>访问失败</h1>');
         }
 
     })
