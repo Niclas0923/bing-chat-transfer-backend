@@ -1,0 +1,21 @@
+{
+  "name": "bing-chat-transfer-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "st": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/niclas0923/bing-chat-transfer-backend.git"
+  },
+  "author": "Niclas",
+  "license": "ISC",
+  "dependencies": {
+    "bing-chat": "^0.2.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
