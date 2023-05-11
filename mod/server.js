@@ -20,7 +20,7 @@ const server = (data)=>{
         const { model, text } = req.body;
         const api = new BingChat({cookie: cookie})
         let mod = ""
-        switch (model) {
+        switch (parseInt(model)) {
             case 0: mod = 'Creative'; break
             case 1: mod = "Balanced"; break
             case 2: mod = "Precise"; break
