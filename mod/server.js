@@ -17,7 +17,7 @@ const server = (data)=>{
     // 接收post命令
     app.post('/bing' , async (req , res)=>{
         // 获取数据对象
-        let { model, val , api} = await req.body;
+        const { model, val , data} = await req.body;
         const mod = await {
             0: 'Creative',
             1: 'Balanced',
@@ -27,14 +27,19 @@ const server = (data)=>{
         await console.log(val)
 
         // 测试是否发送了api
-        api = await api==="null"?new BingChat({cookie: cookie}):api
+        const api = await new BingChat({cookie: cookie})
 
-        const data0 =  await api.sendMessage(val,{variant: mod})
+        let data0 = ""
+        if (data === "null"){
+            data0 =  await api.sendMessage(val,{variant: mod})
+        }else {
+            data0 =  await api.sendMessage(val,data)
+        }
 
         await console.log(data0.text)
 
         if (data0){
-            await res.send({back:data0,api:api})
+            await res.send({back:data0})
         }else {
             await res.status(500).send('<h1>访问失败</h1>');
         }
