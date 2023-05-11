@@ -17,7 +17,7 @@ const server = (data)=>{
     // 接收post命令
     app.post('/bing' , async (req , res)=>{
         // 获取数据对象
-        const { model, val , api0} = await req.body;
+        let { model, val , api} = await req.body;
         const mod = await {
             0: 'Creative',
             1: 'Balanced',
@@ -27,7 +27,7 @@ const server = (data)=>{
         await console.log(val)
 
         // 测试是否发送了api
-        let api = await api0==="null"?new BingChat({cookie: cookie}):api0
+        api = await api==="null"?new BingChat({cookie: cookie}):api
 
         const data0 =  await api.sendMessage(val,{variant: mod})
 
