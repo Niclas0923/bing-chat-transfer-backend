@@ -44,7 +44,7 @@ const server = (data)=>{
             await console.log(data0.text)
             await console.log("\n\n")
 
-            if (data0){
+            if (data0 && data0.text){
                 await res.send(data0)
             }else {
                 await res.status(500).send('<h1>访问失败</h1>');
