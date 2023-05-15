@@ -6,7 +6,7 @@ import {BingChat} from 'bing-chat'
 // 释放网页
 const server = (data)=>{
     const point = data["point"]
-    const cookie = data["cookie"]
+    let cookie = data["cookie"]
     const app = express()
     // 允许跨域
     app.use(cors());
@@ -26,25 +26,34 @@ const server = (data)=>{
 
         await console.log(`mod ${mod}\n${val}`)
 
-        // 测试是否发送了api
-        const api = await new BingChat({cookie: cookie})
+        // 尝试是读取传入的cookie值
+        if (req.body.cookie) cookie = await req.body.cookie
 
-        let data0 = ""
-        if (data === "null"){
-            data0 =  await api.sendMessage(val,{variant: mod})
+        // 验证是否设置了cookie
+        if (cookie.length !== 0){
+            // 测试是否发送了api
+            const api = await new BingChat({cookie: cookie})
+
+            let data0 = ""
+            if (data === "null"){
+                data0 =  await api.sendMessage(val,{variant: mod})
+            }else {
+                data0 =  await api.sendMessage(val,JSON.parse(String(data)))
+            }
+
+            await console.log(data0.text)
+            await console.log("\n\n")
+
+            if (data0){
+                await res.send(data0)
+            }else {
+                await res.status(500).send('<h1>访问失败</h1>');
+                await console.log("获取返回失败")
+            }
         }else {
-            data0 =  await api.sendMessage(val,JSON.parse(String(data)))
+            await res.status(500).send('<h1>访问失败</h1><p>cookie值未设置或未传入</p>');
+            await console.log("cookie值未设置或未传入")
         }
-
-        await console.log(data0.text)
-        await console.log("\n\n")
-
-        if (data0){
-            await res.send(data0)
-        }else {
-            await res.status(500).send('<h1>访问失败</h1>');
-        }
-
     })
 
 
